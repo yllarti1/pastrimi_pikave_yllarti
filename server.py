@@ -51,8 +51,11 @@ async def process(file: UploadFile = File(...)):
         with open(out_path, "rb") as f:
             out_bytes = f.read()
 
-        return Response(
-            content=out_bytes,
-            media_type="text/plain",
-            headers={"Content-Disposition": 'attachment; filename="clean.txt"'}
-        )
+       base_name = os.path.splitext(filename)[0]
+clean_name = f"{base_name}_clean.txt"
+
+return Response(
+    content=out_bytes,
+    media_type="text/plain",
+    headers={"Content-Disposition": f'attachment; filename="{clean_name}"'}
+)
